@@ -16,9 +16,14 @@ class ExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addExpense(Expense expense) async {
-    await DatabaseHelper.instance.create(expense);
-    await loadExpenses();
+  Future<void> addExpense(Expense expense, {bool persist = true}) async {
+    if (persist) {
+      await DatabaseHelper.instance.create(expense);
+      await loadExpenses();
+    } else {
+      _expenses.insert(0, expense);
+      notifyListeners();
+    }
   }
 
   Future<void> updateExpense(Expense expense) async {

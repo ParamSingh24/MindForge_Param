@@ -43,7 +43,7 @@ class PdfService {
       ),
     );
 
-    await Printing.layoutPdf(
-        onLayout: (PdfPageFormat format) async => pdf.save());
+    await Printing.sharePdf(
+        bytes: await pdf.save(), filename: 'expense_report.pdf');
   }
 }

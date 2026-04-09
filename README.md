@@ -4,12 +4,12 @@ Bachat AI is a high-performance, intelligent financial ecosystem built to empowe
 
 ---
 
-## 🌟 Mission Statement
+##  Mission Statement
 To provide a secure, localized, and context-aware financial management platform that eliminates the friction of manual data entry while maintaining strict user data privacy.
 
 ---
 
-## ✨ Enterprise-Grade Features
+##  Enterprise-Grade Features
 
 ### 1. Intelligent On-Device Document Parsing
 * **Privacy-First OCR:** Integrates Google ML Kit's Text Recognition to process financial documents, receipts, and platform bills entirely **on-device**. Sensitive financial data never leaves the user's phone during the extraction phase, ensuring zero-knowledge privacy.
@@ -32,7 +32,7 @@ To provide a secure, localized, and context-aware financial management platform 
 
 ---
 
-## 🏗 System Architecture
+##  System Architecture
 
 Bachat AI is structurally split into an ultra-responsive client application and a highly secure proxy layer.
 
@@ -47,7 +47,7 @@ Bachat AI is structurally split into an ultra-responsive client application and 
 
 ---
 
-## 🛡️ Security Posture
+##  Security Posture
 
 1. **API Obfuscation:** The mobile client contains zero proprietary API keys. All core processing logic is tunneled through enterprise secure channels to the proxy layer.
 2. **Identity Verification:** Handled natively via Google OAuth pipelines running through Firebase Secure Authentication.
@@ -55,7 +55,7 @@ Bachat AI is structurally split into an ultra-responsive client application and 
 
 ---
 
-## 🚀 Building from Source
+## Building from Source
 
 To compile the application for deployment architectures, follow standard procedural builds.
 

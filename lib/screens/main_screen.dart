@@ -47,45 +47,25 @@ class _MainScreenState extends State<MainScreen> {
     final rawResult = await _ocrService.scanReceipt(settings.geminiApiKey);
     
     if (rawResult != null) {
-      if (settings.isDemoMode) {
-        // Simulate heavy AI processing friction
-        await Future.delayed(const Duration(seconds: 3));
-        
-        // --- DEMO MODE: Inject Precise Mock Data ---
-        final expense = Expense(
-          amount: 1233.0,
-          date: DateTime.now(),
-          vendor: 'Savana',
-          category: 'Shopping',
-        );
-        final provider = context.read<ExpenseProvider>();
-        await provider.addExpense(expense, persist: false);
-        
-        if (mounted) {
-           String feedback = settings.isHindi 
-               ? "परम जी, थोड़े कपड़े कम खरीदिए, आपका बजट क्रॉस हो रहा है!"
-               : "Param, you are buying too much clothes please drop it low";
-           _showAiFeedback(feedback, settings.isHindi);
-        }
-      } else {
-        // --- REAL MODE ---
-        final expense = Expense(
-          amount: rawResult['amount'],
-          date: rawResult['date'],
-          vendor: rawResult['vendor'],
-          category: rawResult['category'],
-        );
+      // --- PROCESS LEGITIMATE DATA ---
+      // We removed the hardcoded mock (Savana/1233.0) so the app tests real functionality
+      final expense = Expense(
+        amount: rawResult['amount'] ?? 0.0,
+        date: rawResult['date'] ?? DateTime.now(),
+        vendor: rawResult['vendor'] ?? 'Unknown Vendor',
+        category: rawResult['category'] ?? 'Other',
+      );
 
-        if (mounted) {
-          final provider = context.read<ExpenseProvider>();
-          await provider.addExpense(expense);
-          
-          double catTotal = provider.categoryBreakdown[expense.category] ?? 0.0;
-          String suggestion = BudgetStrategist.generateLocalSuggestion(
-            expense.amount, expense.category, catTotal, isHindi: settings.isHindi
-          );
-          _showAiFeedback(suggestion, settings.isHindi);
-        }
+      if (mounted) {
+        final provider = context.read<ExpenseProvider>();
+        // If in demo mode, do not persist to database, but still show legit functionality
+        await provider.addExpense(expense, persist: !settings.isDemoMode);
+        
+        double catTotal = provider.categoryBreakdown[expense.category] ?? 0.0;
+        String suggestion = BudgetStrategist.generateLocalSuggestion(
+          expense.amount, expense.category, catTotal, isHindi: settings.isHindi
+        );
+        _showAiFeedback(suggestion, settings.isHindi);
       }
     }
     

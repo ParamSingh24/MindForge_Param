@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -245,9 +246,9 @@ class HomeScreen extends StatelessWidget {
                      child: ListView(
                        scrollDirection: Axis.horizontal,
                        children: [
-                         _buildPriceCard(context, "GadgetsNow", "₹23,999", false, "High Price"),
-                         _buildPriceCard(context, "Amazon", "₹20,700", false, "Average"),
-                         _buildPriceCard(context, "JioMart", "₹19,999", true, "Lowest! Buy Here"),
+                         _buildPriceCard(context, "GadgetsNow", "₹23,999", false, "High Price", "https://shop.gadgetsnow.com/smartphones/motorola-moto-edge-60-stylus-5g-256-gb-pantone-gibraltar-sea-8-gb-ram-/10021/p_G629847?utm_source=google&utm_medium=cpc&srsltid=AfmBOoruGI9pQN1HkokzmEmG2rvGpIJ0KqIzpW3pnnfkzEP8LPGrX207GbM"),
+                         _buildPriceCard(context, "Amazon", "₹20,700", false, "Average", "https://www.amazon.in/Motorola-Edge-Stylus-256GB-Storage/dp/B0F5Y84NWS?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=ADQBS37PIWWH6"),
+                         _buildPriceCard(context, "JioMart", "₹19,999", true, "Lowest! Buy Here", "https://www.jiomart.com/p/electronics/moto-edge-60-stylus-256-gb-8-gb-ram-pantone-gibraltar-sea-mobile-phone/611322221?source=shoppingads"),
                        ],
                      ),
                    ),
@@ -352,8 +353,15 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-  Widget _buildPriceCard(BuildContext context, String platform, String price, bool isLowest, String label) {
-    return Container(
+  Widget _buildPriceCard(BuildContext context, String platform, String price, bool isLowest, String label, String url) {
+    return GestureDetector(
+      onTap: () async {
+        final uri = Uri.parse(url);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        }
+      },
+      child: Container(
       width: 150,
       margin: const EdgeInsets.only(right: 12),
       padding: const EdgeInsets.all(16),
@@ -388,7 +396,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }
 

@@ -228,6 +228,30 @@ class HomeScreen extends StatelessWidget {
                          );
                      }),
                    const SizedBox(height: 24),
+                   const SizedBox(height: 24),
+                   // Price Comparison section
+                   Row(
+                     children: [
+                       const Icon(Icons.shopping_bag_outlined, color: AppTheme.primary),
+                       const SizedBox(width: 8),
+                       Text("Smart Deal Finder", style: Theme.of(context).textTheme.headlineSmall),
+                     ],
+                   ),
+                   const SizedBox(height: 4),
+                   Text("Motorola Moto Edge 60 Stylus 256GB", style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppTheme.outlineVariant)),
+                   const SizedBox(height: 16),
+                   SizedBox(
+                     height: 140, // fixed height for horizontal cards
+                     child: ListView(
+                       scrollDirection: Axis.horizontal,
+                       children: [
+                         _buildPriceCard(context, "GadgetsNow", "₹23,999", false, "High Price"),
+                         _buildPriceCard(context, "Amazon", "₹20,700", false, "Average"),
+                         _buildPriceCard(context, "JioMart", "₹19,999", true, "Lowest! Buy Here"),
+                       ],
+                     ),
+                   ),
+                   const SizedBox(height: 24),
                    // Upcoming Bills section
                    Row(
                      children: [
@@ -324,6 +348,44 @@ class HomeScreen extends StatelessWidget {
           Text(vendor, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppTheme.outlineVariant), maxLines: 1),
           const SizedBox(height: 4),
           Text(amount, style: Theme.of(context).textTheme.labelLarge?.copyWith(color: AppTheme.primary)),
+        ],
+      ),
+    );
+  }
+  Widget _buildPriceCard(BuildContext context, String platform, String price, bool isLowest, String label) {
+    return Container(
+      width: 150,
+      margin: const EdgeInsets.only(right: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isLowest ? AppTheme.primaryContainer.withOpacity(0.5) : AppTheme.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 4)],
+        border: Border.all(color: isLowest ? AppTheme.primary : AppTheme.outlineVariant.withOpacity(0.2), width: isLowest ? 2 : 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(child: Text(platform, style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold), maxLines: 1)),
+              if (isLowest)
+               const Icon(Icons.check_circle, color: AppTheme.primary, size: 16),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(price, style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: isLowest ? AppTheme.primary : AppTheme.onSurface, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: isLowest ? AppTheme.primary : AppTheme.surfaceContainerLow,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(label, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: isLowest ? AppTheme.onPrimary : AppTheme.outlineVariant)),
+          ),
         ],
       ),
     );

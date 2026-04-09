@@ -1,3 +1,4 @@
+#MindForge_Param
 # Bachat AI
 
 Bachat AI is a high-performance, intelligent financial ecosystem built to empower users with seamless, privacy-first, and highly intuitive expense management. Leveraging advanced native processing and state-of-the-art Large Language Models (LLMs), the application serves as a comprehensive companion for personal financial tracking, analysis, and insights.
